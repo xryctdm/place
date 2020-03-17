@@ -1,5 +1,5 @@
 
-class Popup {
+export class Popup {
     constructor(elem, openLink) {
         this.elem = elem;
         this.openLink = openLink;

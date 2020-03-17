@@ -1,5 +1,5 @@
 
-class CardList {
+export class CardList {
 
     constructor(containerClass, viewCardPopup, createCardHandler) {
         this.containerClass = containerClass;

@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
     {
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -41,7 +41,7 @@ const initialCards = [
     }
 ];
 
-const validationMessage = {
+export const validationMessage = {
     required: 'Это обязательное поле',
     wrongLength: 'Должно быть от 2 до 30 символов',
     linkError: 'Здесь должна быть ссылка',

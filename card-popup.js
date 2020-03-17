@@ -1,5 +1,5 @@
-
-class CardPopup extends Popup {
+import {Popup} from './popup';
+export class CardPopup extends Popup {
 
     open(event, link) {
      

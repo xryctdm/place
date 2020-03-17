@@ -1,5 +1,5 @@
 
-class ProfileForm {
+export class ProfileForm {
 
     constructor(selector, popup, afterSaveHandler) {
         this.popup = popup;

@@ -1,5 +1,5 @@
 
-class AddPlaceForm {
+export class AddPlaceForm {
 
     constructor(selector, popup, cardList) {
         this.popup = popup;

@@ -1,3 +1,13 @@
+import {Api} from './api';
+import {AddPlaceForm} from './add-place-form';
+import {CardPopup} from './card-popup';
+import {Card} from './card';
+import {validationMessage} from './data';
+import {Popup} from './popup';
+import {CardList} from './card-list';
+import {ProfileForm} from './profile-form';
+
+console.log ('fuuuUUUu');
 
 const api = new Api({
   baseUrl: 'http://95.216.175.5/cohort6',

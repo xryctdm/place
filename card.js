@@ -1,5 +1,5 @@
 
-class Card {
+export class Card {
     constructor(cardData, popup) {
         this.name = cardData.name;
         this.link = cardData.link;
