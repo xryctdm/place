@@ -6,6 +6,7 @@ import {validationMessage} from './data';
 import {Popup} from './popup';
 import {CardList} from './card-list';
 import {ProfileForm} from './profile-form';
+import "./style.css";
 
 console.log ('fuuuUUUu');
 
