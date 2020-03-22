@@ -19,4 +19,4 @@
 
 # URL
 
-(https://xryctdm.github.io/place/)
+https://xryctdm.github.io/place/
