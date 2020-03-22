@@ -8,10 +8,9 @@ import {CardList} from './card-list';
 import {ProfileForm} from './profile-form';
 import "./style.css";
 
-console.log ('fuuuUUUu');
 
 const api = new Api({
-  baseUrl: 'http://95.216.175.5/cohort6',
+  baseUrl: 'https://95.216.175.5/cohort6',
   headers: {
     authorization: '96a71016-5850-4711-a632-4339a8c4303d',
     'Content-Type': 'application/json'
