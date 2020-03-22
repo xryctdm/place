@@ -10,7 +10,7 @@ import "./style.css";
 
 
 const api = new Api({
-  baseUrl: 'https://95.216.175.5/cohort6',
+  baseUrl: 'http://95.216.175.5/cohort6',
   headers: {
     authorization: '96a71016-5850-4711-a632-4339a8c4303d',
     'Content-Type': 'application/json'
