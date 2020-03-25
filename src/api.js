@@ -54,6 +54,64 @@ export class Api {
     });
   }
 
+  addCard(name, link) {
+    return fetch(this.getUrl('/cards'), {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      alert('Что-то пошло не так. ' + err);
+    });
+  }
+
+  deleteCard(id) {
+    return fetch(this.getUrl('/cards/id'), {
+      method: 'DELETE',
+        headers: this.headers,
+        body: JSON.stringify({
+          _id: id,
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      alert('Что-то пошло не так. ' + err);
+    });
+  }
+
+  likeCard(method, id) {
+    return fetch(this.getUrl('/cards/id'), {
+      method: method,
+        headers: this.headers,
+        body: JSON.stringify({
+          _id: id,
+        })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      alert('Что-то пошло не так. ' + err);
+    });
+  }
+
   getUrl(path) {
     return this.baseUrl + path;
   }

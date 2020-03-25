@@ -1,9 +1,10 @@
 
 export class ProfileForm {
 
-    constructor(selector, popup, afterSaveHandler) {
+    constructor(selector, popup, validationMessage, afterSaveHandler) {
         this.popup = popup;
         this.selector = selector;
+        this.validationMessage = validationMessage;
         this.submitButton = document.querySelector('.edit-popup__button');
         this.afterSaveHandler = afterSaveHandler;
         this.addEventListener();
@@ -45,9 +46,9 @@ export class ProfileForm {
         const username = document.querySelector('#username');
 
         if (username.value.length === 0) {
-            return validationMessage.required;
+            return this.validationMessage.required;
         } else if (username.value.length < 2 || username.value.length > 30) {
-            return validationMessage.wrongLength;
+            return this.validationMessage.wrongLength;
         }
 
         return null;
@@ -57,9 +58,9 @@ export class ProfileForm {
         const job = document.querySelector('#job');
 
         if (job.value.length === 0) {
-            return validationMessage.required;
+            return this.validationMessage.required;
         } else if (job.value.length < 2 || job.value.length > 30) {
-            return validationMessage.wrongLength;
+            return this.validationMessage.wrongLength;
         }
 
         return null;
