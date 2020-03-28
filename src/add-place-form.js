@@ -63,22 +63,16 @@ export class AddPlaceForm {
 
     save(event) {
         event.preventDefault();
-
         let addedName = this.selector.elements.name;
         let addedLink = this.selector.elements.link;
-        let addedCardData = this.getCardData(addedName, addedLink);
-        let addedCard = this.cardList.onCreateCardHandler(addedCardData);
-        this.cardList.addCard(addedCard);
-        this.popup.close();
-        document.forms.place.reset();
-        this.submitButton.setAttribute('disabled', true);
-        this.submitButton.classList.remove('popup__button_enabled');
-        console.log(addedCard);
-        console.log(addedLink);
-        console.log(addedName);
-        console.log(addedCardData);
-
-        this.afterSaveHandler(addedCardData.name, addedCardData.link);
+        this.afterSaveHandler(addedName.value, addedLink.value).then(result => {
+            let addedCard = this.cardList.onCreateCardHandler(result);
+            this.cardList.addCard(addedCard);
+            this.popup.close();
+            document.forms.place.reset();
+            this.submitButton.setAttribute('disabled', true);
+            this.submitButton.classList.remove('popup__button_enabled');
+        })
     }
 
     addEventListener() {

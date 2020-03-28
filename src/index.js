@@ -37,26 +37,29 @@ const addCardPopup = new Popup(
   document.querySelectorAll('.user-info__button')
 );
 
+api.getUserInfo().then(profileData => {
+  profileForm.setData(profileData);
+  const cardList = new CardList(placeList, viewCardPopup, function (cardData, viewCardPopup) {
+    if (profileData._id === cardData.owner._id) {
+      return new Card(cardData, viewCardPopup, api, profileData).createWithOwner();
+    }
+    return new Card(cardData, viewCardPopup, api, profileData).create();
+  });
 
-const cardList = new CardList(placeList, viewCardPopup, function (cardData, viewCardPopup) {
-  return new Card(cardData, viewCardPopup).create();
+  api.getInitialCards().then(result => {
+    cardList.render(result);
+  });
+
+  const addPlaceForm = new AddPlaceForm(
+    document.querySelector('.popup__form'),
+    addCardPopup,
+    cardList,
+    validationMessage,
+    function (name, link) {
+      return api.addCard(name, link);  
+    }
+  );
 });
-
-
-api.getInitialCards().then(result => {
-  cardList.render(result);
-});
-
-
-const addPlaceForm = new AddPlaceForm(
-  document.querySelector('.popup__form'),
-  addCardPopup,
-  cardList,
-  validationMessage,
-  function (name, link) {
-    api.addCard(name, link);
-  }
-);
 
 const profileForm = new ProfileForm(document.querySelector('.edit-popup__form'), 
   editNewPopup, 
@@ -65,6 +68,3 @@ const profileForm = new ProfileForm(document.querySelector('.edit-popup__form'),
   api.saveUserInfo(name, job);
 });
 
-api.getUserInfo().then(result => {
-  profileForm.setData(result);
-});

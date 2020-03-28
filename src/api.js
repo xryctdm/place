@@ -75,12 +75,9 @@ export class Api {
   }
 
   deleteCard(id) {
-    return fetch(this.getUrl('/cards/id'), {
+    return fetch(this.getUrl('/cards/')+id, {
       method: 'DELETE',
         headers: this.headers,
-        body: JSON.stringify({
-          _id: id,
-      })
     })
     .then(res => {
       if (res.ok) {
@@ -93,13 +90,26 @@ export class Api {
     });
   }
 
-  likeCard(method, id) {
-    return fetch(this.getUrl('/cards/id'), {
-      method: method,
+  likeCard(id) {
+    return fetch(this.getUrl('/cards/like/')+id, {
+      method: 'PUT',
         headers: this.headers,
-        body: JSON.stringify({
-          _id: id,
-        })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      alert('Что-то пошло не так. ' + err);
+    });
+  }
+
+  dislikeCard(id) {
+    return fetch(this.getUrl('/cards/like/')+id, {
+      method: 'DELETE',
+        headers: this.headers,
     })
     .then(res => {
       if (res.ok) {
