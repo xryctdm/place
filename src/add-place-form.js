@@ -1,10 +1,12 @@
 
-class AddPlaceForm {
+export class AddPlaceForm {
 
-    constructor(selector, popup, cardList) {
+    constructor(selector, popup, cardList, validationMessage, afterSaveHandler) {
         this.popup = popup;
         this.cardList = cardList;
         this.selector = selector;
+        this.validationMessage = validationMessage;
+        this.afterSaveHandler = afterSaveHandler;
         this.submitButton = document.querySelector('.popup__button');
         this.addEventListener();
     }
@@ -38,9 +40,9 @@ class AddPlaceForm {
         const place = document.querySelector('#place');
 
         if (place.value.length === 0) {
-            return validationMessage.required;
+            return this.validationMessage.required;
         } else if (place.value.length < 2 || place.value.length > 30) {
-            return validationMessage.wrongLength;
+            return this.validationMessage.wrongLength;
         }
 
         return null;
@@ -50,9 +52,9 @@ class AddPlaceForm {
         const link = document.querySelector('#link');
 
         if (link.validity.typeMismatch) {
-            return validationMessage.linkError;
+            return this.validationMessage.linkError;
         } else if (link.value.length === 0) {
-            return validationMessage.required;
+            return this.validationMessage.required;
         }
 
         return null;
@@ -61,12 +63,16 @@ class AddPlaceForm {
 
     save(event) {
         event.preventDefault();
-
         let addedName = this.selector.elements.name;
         let addedLink = this.selector.elements.link;
-        let addedCard = this.cardList.onCreateCardHandler(this.getCardData(addedName, addedLink));
-        this.cardList.addCard(addedCard);
-        this.afterSave();
+        this.afterSaveHandler(addedName.value, addedLink.value).then(result => {
+            let addedCard = this.cardList.onCreateCardHandler(result);
+            this.cardList.addCard(addedCard);
+            this.popup.close();
+            document.forms.place.reset();
+            this.submitButton.setAttribute('disabled', true);
+            this.submitButton.classList.remove('popup__button_enabled');
+        })
     }
 
     addEventListener() {
@@ -74,13 +80,6 @@ class AddPlaceForm {
         this.selector.addEventListener('input', () =>{this.validate()});
         document.querySelector('#place').addEventListener('input', () =>{this.validatePlaceField()});
         document.querySelector('#link').addEventListener('input', () =>{this.validateLinkField()});
-    }
-
-    afterSave() {
-        this.popup.close();
-        document.forms.place.reset();
-        this.submitButton.setAttribute('disabled', true);
-        this.submitButton.classList.remove('popup__button_enabled');
     }
 
     getCardData(addedName, addedLink) {

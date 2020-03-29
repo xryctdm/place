@@ -1,23 +1,46 @@
+import { Api } from "./api";
 
-class Card {
-    constructor(cardData, popup) {
+export class Card {
+    /**
+     * 
+     * @param {Api} api 
+     * 
+     */
+    constructor(cardData, popup, api, profile) {
+        this.api = api;
+        this.likes = cardData.likes;
         this.name = cardData.name;
         this.link = cardData.link;
+        this.id = cardData._id;
+        this.ownerId = cardData.owner._id;
+        this.profile = profile;
         this.popup = popup;
-
         this.likeListener = this.likeListenerHandler.bind(this);
         this.deleteListener = this.deleteListenerHandler.bind(this);
         this.openListener = this.openListenerHandler.bind(this);
     }
 
+    createWithOwner() {
+        this._createBaseCard();
+        this._createDeleteIcon();
+        this.addEvents();
+
+        return this.placeCard;
+    }
+
     create() {
-        this._createCard()
-            ._createImage()
-            ._createDeleteIcon()
-            ._createCardDescription()
-            ._createCardName()
-            ._createLikeIcon()
-            .addEvents();
+        this._createBaseCard();
+        this.addEvents();
+    
+        return this.placeCard;
+    }
+
+    _createBaseCard() {
+        this._createCard();
+        this._createImage();
+        this._createCardDescription();
+        this._createCardName();
+        this._createLikeIcon();
 
         return this.placeCard;
     }
@@ -25,6 +48,8 @@ class Card {
     _createCard() {
         this.placeCard = document.createElement('div');
         this.placeCard.classList.add('place-card');
+        this.placeCard.setAttribute('data-id', this.id);
+        this.placeCard.setAttribute('data-owner-id', this.ownerId);
 
         return this;
     }
@@ -66,21 +91,37 @@ class Card {
     _createLikeIcon() {
         this.placeCardLikeIcon = document.createElement('button');
         this.placeCardDescription.appendChild(this.placeCardLikeIcon);
+
         this.placeCardLikeIcon.classList.add('place-card__like-icon');
+        let isLiked = this.likes.find(like => {
+            return this.profile._id === like._id;
+        })
+
+        if (typeof isLiked !== 'undefined') {
+            this.placeCardLikeIcon.classList.add('place-card__like-icon_liked');
+        }
 
         return this;
     }
 
-
     like() {
-        this.placeCardLikeIcon.classList.toggle('place-card__like-icon_liked');
+        if (this.placeCardLikeIcon.classList.contains('place-card__like-icon_liked')) {
+            this.placeCardLikeIcon.classList.remove('place-card__like-icon_liked');
+            this.api.dislikeCard(this.id);
+        } else {
+            this.placeCardLikeIcon.classList.add('place-card__like-icon_liked');
+            this.api.likeCard(this.id);
+        }
     }
 
     delete(event) {
 
         if (event.target.classList.contains('place-card__delete-icon')) {
+            console.log(this.api);
+
+            this.api.deleteCard(event.target.closest(".place-card").getAttribute('data-id'));
+            event.target.closest(".place-card").remove();  
             this.removeEvents();
-            this.placeCard.remove();
         }
     }
 
@@ -90,13 +131,17 @@ class Card {
 
     addEvents() {
         this.placeCardLikeIcon.addEventListener('click',this.likeListener);
-        this.placeCardDeleteIcon.addEventListener('click', this.deleteListener);
+        if (this.placeCardDeleteIcon) {
+            this.placeCardDeleteIcon.addEventListener('click', this.deleteListener);
+        }
         this.placeCard.addEventListener('click', this.openListener);
     }
 
     removeEvents() {
         this.placeCardLikeIcon.removeEventListener('click', this.likeListener);
-        this.placeCardDeleteIcon.removeEventListener('click', this.deleteListener);
+        if (this.placeCardDeleteIcon) {
+            this.placeCardDeleteIcon.removeEventListener('click', this.deleteListener);
+        }
         this.placeCard.removeEventListener('click', this.openListener);
     }
 
