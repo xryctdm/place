@@ -17,10 +17,7 @@ const api = new Api({
   }
 });
 
-
 const placeList = document.querySelector('.places-list');
-
-
 
 const viewCardPopup = new CardPopup(
   document.querySelector('.photo-popup'),
