@@ -10,7 +10,7 @@ import "./style.css";
 
 
 const api = new Api({
-  baseUrl: NODE_ENV === "development" ? "http://praktikum.tk/cohort6" : "https://praktikum.tk/cohort6",
+  baseUrl: NODE_ENV === "development" ? "http://nomoreparties.co/cohort6" : "https://nomoreparties.co/cohort6",
   headers: {
     authorization: '96a71016-5850-4711-a632-4339a8c4303d',
     'Content-Type': 'application/json'
@@ -61,7 +61,8 @@ api.getUserInfo().then(profileData => {
   );
 });
 
-const profileForm = new ProfileForm(document.querySelector('.edit-popup__form'), 
+const profileForm = new ProfileForm(
+  document.querySelector('.edit-popup__form'), 
   editNewPopup, 
   validationMessage,
   function (name, job) {
