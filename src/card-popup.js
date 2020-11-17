@@ -12,6 +12,16 @@ export class CardPopup extends Popup {
     }
 
     addEvents() {
+        document.addEventListener('keyup', (event) => {
+            if(event.key === 'Escape') {
+                this.close();
+            }
+        });
         this.elem.querySelector('.popup__close').addEventListener('click', () =>{this.close()});
+        this.elem.addEventListener('click', (event) =>{
+            if (event.target.classList.contains('non-popup')) {
+              this.close();
+            }
+          });
     }
 }

@@ -12,6 +12,7 @@
 @import url(../blocks/edit-popup/edit-popup.css);
 @import url(../blocks/photo-popup/photo-popup.css);
 @import url(../blocks/error-message/error-message.css);
+@import url(../blocks/non-popup/non-popup.css);
 
 body {
   background-color: #000;
