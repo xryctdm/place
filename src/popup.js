@@ -21,5 +21,15 @@ export class Popup {
         });
 
         this.elem.querySelector('.popup__close').addEventListener('click', () =>{this.close()});
+        document.addEventListener('keyup', (event) => {
+            if(event.key === 'Escape') {
+                this.close();
+            }
+        });
+        this.elem.addEventListener('click', (event) =>{
+            if (event.target.classList.contains('non-popup')) {
+              this.close();
+            }
+          });
     }
 }
