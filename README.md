@@ -19,7 +19,9 @@
 
 ## URL
 
-[ссылка на проект](https://xryctdm.github.io/place/)
+* https://xryctdm-place.gq
+
+* https://xryctdm.github.io/place
 
 ## Установка проекта
 
