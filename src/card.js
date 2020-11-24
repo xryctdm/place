@@ -41,6 +41,7 @@ export class Card {
         this._createCardDescription();
         this._createCardName();
         this._createLikeIcon();
+        this._createLikeQuantityIcon();
 
         return this.placeCard;
     }
@@ -104,21 +105,31 @@ export class Card {
         return this;
     }
 
+    _createLikeQuantityIcon() {
+        this.placeCardLikeQuantityIcon = document.createElement('div');
+        this.placeCardLikeIcon.appendChild(this.placeCardLikeQuantityIcon);
+        this.placeCardLikeQuantityIcon.classList.add('place-card__like-quantity');
+        this.placeCardLikeQuantityIcon.textContent = `${this.likes.length}`;
+
+        return this;
+    }
+
     like() {
         if (this.placeCardLikeIcon.classList.contains('place-card__like-icon_liked')) {
             this.placeCardLikeIcon.classList.remove('place-card__like-icon_liked');
             this.api.dislikeCard(this.id);
+            this.likes.pop();
+            this.placeCardLikeQuantityIcon.textContent = `${this.likes.length}`;
         } else {
             this.placeCardLikeIcon.classList.add('place-card__like-icon_liked');
             this.api.likeCard(this.id);
+            this.placeCardLikeQuantityIcon.textContent = `${this.likes.push('')}`;
         }
     }
 
     delete(event) {
 
         if (event.target.classList.contains('place-card__delete-icon')) {
-            console.log(this.api);
-
             this.api.deleteCard(event.target.closest(".place-card").getAttribute('data-id'));
             event.target.closest(".place-card").remove();  
             this.removeEvents();

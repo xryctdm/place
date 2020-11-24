@@ -1,0 +1,9 @@
+.place-card__like-quantity {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    top: 18px;
+    right: 3px;
+    font-size: 12px;
+    line-height: 16px;
+}
