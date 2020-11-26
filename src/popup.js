@@ -13,6 +13,7 @@ export class Popup {
 
     close() {
         this.elem.classList.remove('popup_is-opened');
+        document.forms.avatar.reset();
     }
 
     addEvents() {
