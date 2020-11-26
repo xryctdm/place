@@ -6,6 +6,7 @@ import {validationMessage} from './data';
 import {Popup} from './popup';
 import {CardList} from './card-list';
 import {ProfileForm} from './profile-form';
+import {AvatarForm} from './avatar-form';
 import "./style.css";
 
 
@@ -34,8 +35,14 @@ const addCardPopup = new Popup(
   document.querySelectorAll('.user-info__button')
 );
 
+const avatarPopup = new Popup(
+  document.querySelector('.avatar-popup'),
+  document.querySelectorAll('.user-info__photo')
+)
+
 api.getUserInfo().then(profileData => {
   profileForm.setData(profileData);
+  avatarForm.setData(profileData);
   const cardList = new CardList(placeList, viewCardPopup, function (cardData, viewCardPopup) {
     if (profileData._id === cardData.owner._id) {
       return new Card(cardData, viewCardPopup, api, profileData).createWithOwner();
@@ -64,5 +71,13 @@ const profileForm = new ProfileForm(
   validationMessage,
   function (name, job) {
   api.saveUserInfo(name, job);
+});
+
+const avatarForm = new AvatarForm(
+  document.querySelector('.avatar-popup__form'),
+  avatarPopup,
+  validationMessage,
+  function (avatar) {
+    api.updateAvatar(avatar);
 });
 

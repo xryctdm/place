@@ -54,6 +54,25 @@ export class Api {
     });
   }
 
+  updateAvatar(avatar) {
+    return fetch(this.getUrl('/users/me/avatar'), {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify({
+        avatar: avatar,
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      alert('Что-то пошло не так. ' + err);
+    });
+  }
+
   addCard(name, link) {
     return fetch(this.getUrl('/cards'), {
       method: 'POST',
